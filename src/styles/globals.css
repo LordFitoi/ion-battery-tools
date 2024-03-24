@@ -1,0 +1,23 @@
+.cell {
+    background-color: #EFF1F5;
+    border-color: #D0D5DD;
+    cursor: pointer;
+    transition:
+        background-color 100ms ease,
+        border-color 100ms ease,
+        color 100ms ease;
+}
+
+input[type="checkbox"]:checked + .cell {
+    background-color: #D1FADF;
+    border-color: #039855;
+    color: #039855;
+}
+
+html, body {
+    overscroll-behavior: none;
+}
+
+.icon {
+    filter: invert(99%) sepia(0%) saturate(7498%) hue-rotate(43deg) brightness(115%) contrast(100%);
+}

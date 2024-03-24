@@ -1,5 +1,7 @@
 ---
+import '../styles/globals.css';
 import PackBuilderForm from '../components/PackBuilderForm.astro';
+const today = new Date();
 ---
 
 <html lang="en">
@@ -9,11 +11,38 @@ import PackBuilderForm from '../components/PackBuilderForm.astro';
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-
+		<title>Ion Battery Tools - Nahum Santana</title>
 	</head>
-	<body>
+	<body class="flex flex-col min-h-screen">
+		<header class="bg-[#111322]">
+			<div class="container mx-auto w-full px-[20px] py-[16px] origin-left flex items-center">
+				<a href="/" class="flex text-base lg:text-lg no-underline items-center">
+					<img width="32" height="32" src="/favicon.svg" class="mr-[1px] w-[24px] h-[24px] lg:w-[32px] lg:h-[32px]" />
+					<span class="block text-[#FFFFFF] leading-[0.6] no-underline font-semibold">ahum</span>
+					<span class="block text-[#FFFFFF] leading-[0.6] no-underline font-thin">Santana</span>
+				</a>
+		
+				<a href="/blog" class="ml-auto text-[#FFF] cursor-pointer hover:underline text-xs">
+					Blog
+				</a>
+			</div>
+		</header>
 		<PackBuilderForm />
+		<footer class="bg-[#111322] mt-auto">
+			<div class="container mx-auto w-full flex justify-between px-[20px] py-[16px] items-center">
+				<span class="text-[10px] lg:text-xs text-[#FFF] font-thin">
+					&copy; {today.getFullYear()} Nahum Santana. All rights reserved.
+				</span>
+				<div class="flex gap-[16px]">
+					<a href="https://github.com/LordFitoi" class="icon w-[20px] h-[20px] cursor-pointer" aria-label="Github Profile">
+						<img src="/icons/github.svg" alt="">
+					</a>
+					<a href="https://www.linkedin.com/in/nahum-santana-45460a24b/" class="icon w-[20px] h-[20px] cursor-pointer" aria-label="LinkedIn Profile">
+						<img src="/icons/linkedin.svg" alt="">
+					</a>
+				</div>
+			</div>
+		</footer>
 	</body>
-</html>
+	</html>
 <script>
