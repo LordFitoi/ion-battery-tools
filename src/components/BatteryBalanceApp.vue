@@ -71,7 +71,7 @@
                 <span class="block text-lg text-[#667085] mb-4 font-bold">BATTERY CHARACTERISTICS</span>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-[24px]">
                     <div>
-                        <span class="block text-md text-[#667085] mb-1">Voltage ({{ series }} nominal)</span>
+                        <span class="block text-md text-[#667085] mb-1">Voltage ({{ nominal }} nominal)</span>
                         <div class="w-full rounded-lg border-[1px] border-[#D0D5DD] shadow-sm px-[12px] py-[8px] text-sm text-[#667085]" >
                             {{ voltage }}V
                         </div>
@@ -111,10 +111,11 @@ export default {
         series: 1,
         parallels: 1,
         nominalVoltage: 3.6,
+        nominal: null,
         voltage: null,
         capacity: null,
         power: null,
-        pack: null
+        pack: null,
     }),
     methods: {
         addCell() {
@@ -145,6 +146,7 @@ export default {
             this.voltage = this.nominalVoltage * this.series;
             this.capacity = packBuilder.meanParallelAmp / 1000;
             this.power = this.voltage * this.capacity;
+            this.nominal = this.series;
         }
     }
 }
