@@ -10,7 +10,7 @@
                             <span class="text-xs text-[#667085] ml-[4px]">Slot {{ i + 1 }}</span>
                         </div>
                         <div class="w-max flex gap-[8px] items-center rounded-[16px] h-[22px] px-[8px] py-[2px] text-sm bg-[#F2F4F7] text-[#344054]" >
-                            <img src="/icons/trash-01.svg" class="cursor-pointer w-[14px] h-[14px] hidden group-hover:block" @click="removeCell(i)">
+                            <img :src="getIcon('/icons/trash-01.svg')" class="cursor-pointer w-[14px] h-[14px] hidden group-hover:block" @click="removeCell(i)">
                             <span>{{ cell }} mAh</span>
                         </div>
                     </div>
@@ -150,6 +150,10 @@ export default {
             this.capacity = packBuilder.meanParallelAmp / 1000;
             this.power = this.voltage * this.capacity;
             this.nominal = this.series;
+        },
+        getIcon(path) {
+            const base = process.env.NODE_ENV != "development" ? '/ion-battery-tools' : "";
+            return base + path;
         }
     }
 }
