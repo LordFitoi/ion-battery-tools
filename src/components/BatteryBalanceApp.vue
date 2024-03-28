@@ -2,8 +2,8 @@
     <section class="container max-w-[1000px] mx-auto px-[20px] py-[60px] flex flex-col gap-[40px]">
         <h1 class="block text-2xl lg:text-5xl text-[#111322] mb-1">Pack Builder</h1>
         <div class="flex flex-col gap-[16px]">
-            <div class="mb-[16px]">
-                <label class="block text-md text-[#667085] mb-[16px]">Provide a list of cells</label>
+            <div class="mb-[16px] flex flex-col gap-[16px]">
+                <label class="block text-md text-[#667085]">Provide a list of cells</label>
                 <div class="flex flex-wrap gap-[8px]">
                     <div class="flex flex-col group" v-for="cell, i in cells" :key="cell" draggable="true" @dragstart="dragstart">
                         <div class="w-full flex justify-between items-center">
@@ -16,17 +16,20 @@
                     </div>
                 </div>
 
-                <div class="flex gap-2 mt-[16px]">
-                    <input
-                        class="grow rounded-lg border-[1px] border-[#D0D5DD] shadow-sm px-[14px] py-[10px] text-sm text-[#667085]"
-                        type="number" min="1" placeholder="9823 mAh" ref="cellInput" v-model="cellInput" @keydown.enter="addCell"
-                    />
-                    <button
-                        class="w-max bg-[#111322] text-white rounded-lg px-[14px] py-[10px] text-sm text-center hover:bg-[#50575E] cursor-pointer"
-                        @click="addCell"
-                    >
-                        Add Cell
-                    </button>
+                <div>
+                    <div class="flex gap-2">
+                        <input
+                            class="grow rounded-lg border-[1px] border-[#D0D5DD] shadow-sm px-[14px] py-[10px] text-sm text-[#667085]"
+                            type="number" min="1" placeholder="9823 mAh" ref="cellInput" v-model="cellInput" @keydown.enter="addCell"
+                        />
+                        <button
+                            class="w-max bg-[#111322] text-white rounded-lg px-[14px] py-[10px] text-sm text-center hover:bg-[#50575E] cursor-pointer"
+                            @click="addCell"
+                        >
+                            Add Cell
+                        </button>
+                    </div>
+                    <span class="block text-xs text-[#667085] mt-1 ml-2">Tip: Press enter to quickly add the cell</span>
                 </div>
             </div>
             <div>
