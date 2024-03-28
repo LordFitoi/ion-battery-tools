@@ -106,7 +106,7 @@ export default {
         ParallelPack
     },
     data: () => ({
-        cells: [1203, 1231, 213],
+        cells: [],
         cellInput: null,
         series: 1,
         parallels: 1,
