@@ -4,18 +4,17 @@
         <div class="flex flex-col gap-[16px]">
             <div class="mb-[16px] flex flex-col gap-[16px]">
                 <label class="block text-md text-[#667085]">Provide a list of cells</label>
-                <div class="flex flex-wrap gap-[8px]">
-                    <div class="flex flex-col group" v-for="cell, i in cells" :key="cell" draggable="true" @dragstart="dragstart">
-                        <div class="w-full flex justify-between items-center">
+                <div class="grid grid-cols-4 sm:grid-cols-6  lg:grid-cols-10 gap-[8px]">
+                    <div class="flex flex-col group" v-for="cell, i in cells" :key="cell">
+                        <div class="w-full flex justify-between items-center mb-1">
                             <span class="text-xs text-[#667085] ml-[4px]">Slot {{ i + 1 }}</span>
+                            <img :src="getIcon('/icons/trash-01.svg')" class="cursor-pointer w-[14px] h-[14px] block lg:hidden group-hover:block" @click="removeCell(i)">
                         </div>
-                        <div class="w-max flex gap-[8px] items-center rounded-[16px] h-[22px] px-[8px] py-[2px] text-sm bg-[#F2F4F7] text-[#344054]" >
-                            <img :src="getIcon('/icons/trash-01.svg')" class="cursor-pointer w-[14px] h-[14px] hidden group-hover:block" @click="removeCell(i)">
-                            <span>{{ cell }} mAh</span>
+                        <div class="grow flex gap-[8px] items-center rounded-[16px] min-h-[22px] px-[8px] py-[2px] text-sm bg-[#F2F4F7] text-[#344054]" >
+                            <span class="break-words w-full ">{{ cell }} mAh</span>
                         </div>
                     </div>
                 </div>
-
                 <div>
                     <div class="flex gap-2">
                         <input
@@ -127,10 +126,6 @@ export default {
         },
         removeCell(i) {
             this.cells.splice(i, 1);
-        },
-        dragstart(e) {
-            console.log(e.target)
-            e.target.classList.add('dragging');
         },
         buildPack() {
             if (this.cells.length < 1) {
