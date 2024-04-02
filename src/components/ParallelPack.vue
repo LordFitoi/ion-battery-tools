@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col gap-[24px] border-[1px] border-[#D0D5DD] rounded-lg p-[16px] bg-[#FFF] shadow-md">
         <div>
-            <span class="block text-lg text-[#667085] mb-4 font-bold">PARALLEL PACK {{ index }}</span>
+            <span class="block text-lg text-[#667085] mb-4 font-bold">PARALLEL PACK {{ index + 1 }}</span>
             <div class="mb-2">
                 <span class="block text-md text-[#667085] mb-1">Total Capacity</span>
                 <div class="w-full rounded-lg border-[1px] border-[#D0D5DD] shadow-sm px-[12px] py-[8px] text-sm text-[#667085]" >
