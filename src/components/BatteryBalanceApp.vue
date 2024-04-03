@@ -68,7 +68,7 @@
                 Build Pack
             </button>
         </div>
-        <div v-if="pack" class="flex flex-col gap-4">
+        <div v-if="packs" class="flex flex-col gap-4">
             <div class=" border-[1px] border-[#D0D5DD] rounded-lg p-[16px] bg-[#FFF] shadow-md">
                 <span class="block text-lg text-[#667085] mb-4 font-bold">BATTERY CHARACTERISTICS</span>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-[24px]">
@@ -93,7 +93,7 @@
                 </div>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[16px]">
-                <ParallelPack v-for="(parallel, i) in pack" :key="parallel" :data="parallel" :index="i" />
+                <ParallelPack v-for="(pack, i) in packs" :key="pack" :data="pack" :index="i" />
             </div>
         </div>
     </section>
@@ -117,7 +117,7 @@ export default {
         voltage: null,
         capacity: null,
         power: null,
-        pack: null,
+        packs: null,
     }),
     methods: {
         addCell() {
@@ -137,12 +137,12 @@ export default {
                 alert('You must provide at least the same amount of cells as the product of series and parallels');
                 return;
             }
-
+   
             const packBuilder = new PackBuilder(this.cells, this.series, this.parallels);
-            this.pack = packBuilder.build();
 
+            this.packs = packBuilder.build();
             this.voltage = this.nominalVoltage * this.series;
-            this.capacity = packBuilder.meanParallelAmp / 1000;
+            this.capacity = packBuilder.amps / 1000;
             this.power = this.voltage * this.capacity;
             this.nominal = this.series;
         },

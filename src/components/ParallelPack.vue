@@ -18,10 +18,10 @@
         <div>
             <span class="block text-base text-[#667085] mb-1">Cells</span>
             <div class="flex flex-wrap gap-[8px] cells">
-                <label class="select-none" v-for="cell in data.cells" :key="cell">
+                <label class="select-none" v-for="cell in data" :key="cell">
                     <input type="checkbox" class="hidden" />
                     <div class="w-max rounded-lg border-[1px] border-[#D0D5DD] shadow-sm p-[8px] text-xs text-[#667085] cell" >
-                        <span class="block font-bold">{{ cell.amp }} mAh</span>
+                        <span class="block font-bold">{{ cell.amps }} mAh</span>
                         <span class="block">Slot {{ cell.slot }}</span>
                     </div>
                 </label>
@@ -30,6 +30,8 @@
     </div>
 </template>
 <script>
+import { sum } from '../scripts/utils';
+
 export default {
     props: {
         data: {
@@ -42,9 +44,17 @@ export default {
         }
     },
     data() {
+        const amps = this.data.map(c=>c.amps);
+
         return {
-            desviation: Math.floor(this.data.getDesviation()),
-            capacity: this.data.getTotalCapacity()
+            desviation: Math.floor(this.getDesviation(amps)),
+            capacity: sum(amps)
+        }
+    },
+    methods: {
+        getDesviation(array) {
+            const mean = sum(array) / array.length;
+            return Math.sqrt(sum(array.map(value => (value - mean) ** 2)) / array.length);
         }
     }
 }

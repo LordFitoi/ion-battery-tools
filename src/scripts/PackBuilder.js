@@ -1,86 +1,58 @@
-export function sum(array) {
-    return array.reduce((acc, val) => acc + val, 0);
-}
-
-export function takeRight(arr, n = 1) {
-    return  n === 0 ? [] : arr.slice(-n);
-}
+import { sum } from './utils.js';
 
 class Cell {
-    constructor(amp, slot=-1) {
-        this.amp = amp;
+    constructor(amps, slot=-1) {
+        this.amps = amps;
         this.slot = slot;
     }
 }
 
-class ParallelPack {
-    constructor(cells=null) {
-        this.cells = cells || [];
-    }
-    addCell(cell) {
-        this.cells.push(cell);
-    }
-    length() {
-        return this.cells.length;
-    }
-    getCapacities() {
-        return this.cells.map(cell => cell.amp);
-    }
-    getTotalCapacity() {
-        return sum(this.getCapacities());
-    }
-    getDesviation() {
-        const mean = this.getTotalCapacity() / this.length();
-        const capacities = this.getCapacities();
-
-        return Math.sqrt(sum(capacities.map(capacity => (capacity - mean) ** 2)) / this.length());
-    }
-}
-
 export class PackBuilder {
-    constructor(cells, series, parallel) {
-        this.parallel = parallel;
+    constructor(cells, series, parallels) {
+        this.parallels = parallels;
         this.series = series;
-        this.cells = this.getCells(cells);
-        this.optimalCells = this.getOptimalCells(this.cells, this.series, this.parallel);
+        this.cells = cells.map((amp, index) => new Cell(amp, index + 1))
+            .sort((a, b) => a.amps - b.amps)
+            .reverse()
+            .splice(0, this.series * this.parallels);
 
-        this.meanParallelAmp = sum(this.optimalCells.map(cell => cell.amp)) / series;
-        this.meanBatteryAmp = this.meanParallelAmp / parallel;
+        this.amps = sum(this.cells.map(c=>c.amps)) / this.series;
     }
-    getCells(cells) {
-        return cells.map((amp, index) => new Cell(amp, index + 1));
-    }
-    getOptimalCells(cells, series, parallel) {
-        return cells.sort((a, b) => a.amp - b.amp).reverse().slice(0, series * parallel);
-    }
-    getParallelError(parallelPack) {
-        const n = parallelPack.length();
-        const capacity = parallelPack.getTotalCapacity();
 
-        return this.optimalCells.map((cell) => {
-            const mean = this.meanBatteryAmp * (n+1);
-            const newCapacity = capacity + cell.amp;
-            return Math.abs((mean - newCapacity));
-        });
-    }
-    extractBattery(index) {
-        return this.optimalCells.splice(index, 1)[0];
-    }
+
     build() {
-        const parallelPacks = [];
+        const packs = []
 
-        for (let i=0; i < this.series; i++) {
-            const parallelPack = new ParallelPack([this.extractBattery(0)]);
+        const queues = [...Array(this.parallels).keys()].map(i => {
+            return this.cells.slice(this.series * i, this.series * (i + 1));
+        });
 
-            for (let i=0; i < this.parallel - 1; i++) {
-                const errors = this.getParallelError(parallelPack);
-                const minErrorIndex = errors.indexOf(Math.min(...errors));
-                parallelPack.addCell(this.extractBattery(minErrorIndex));
+        for (let i = 0; i < this.series; i++) {
+            const pack = [];
+
+            for (let j = 0; j < this.parallels; j++) {
+                let target = this.amps
+
+                if (j < this.parallels - 1) {
+                    const max = queues[j][0].amps
+                    const min = queues[j][queues[j].length - 1].amps
+                    target -= (min + max) / 2
+                }
+
+                const errors = queues[j].map(cell => {
+                    const amps = pack.concat(cell).map(c => c.amps);
+                    return (target - sum(amps)) ** 2;
+                });
+
+                const index = errors.indexOf(Math.min(...errors));
+                
+                pack.push(queues[j].splice(index, 1)[0]);
             }
 
-            parallelPacks.push(parallelPack);
+            packs.push(pack);
         }
 
-        return parallelPacks;
-    } 
+        return packs;
+
+    }
 }
