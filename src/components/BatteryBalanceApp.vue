@@ -122,28 +122,21 @@ export default {
     mounted() {
         this.load();
     },
-    watch: {
-        cells: {
-            handler() {
-                this.save();
-            },
-            deep: true
-        }
-    },
     methods: {
         save() {
             localStorage.setItem('cells', JSON.stringify(this.cells));
         },
         load() {
-            
             this.cells = JSON.parse(localStorage.getItem('cells'));
         },
         addCell() {
             this.cells.push(Number(this.cellInput));
             this.cellInput = null;
+            this.save();
         },
         removeCell(i) {
             this.cells.splice(i, 1);
+            this.save();
         },
         buildPack() {
             if (this.cells.length < 1) {
