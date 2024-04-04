@@ -1,14 +1,9 @@
-# Astro Starter Kit: Minimal
+# Ion Battery Tool
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Ion Battery Tool is designed to optimize the capacity of battery packs by ensuring uniform energy distribution across individual cells. Whether you're managing batteries for electric vehicles, renewable energy systems, or portable devices, maintaining balanced cell capacities is crucial for maximizing performance and lifespan.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+![screencapture-lordfitoi-github-io-ion-battery-tools-2024-04-03-22_40_23](https://github.com/LordFitoi/ion-battery-tools/assets/37852973/2c40ef53-fde1-47ad-ad8d-fea614e9366b)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
 ## 🚀 Project Structure
 
@@ -23,12 +18,6 @@ Inside of your Astro project, you'll see the following folders and files:
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
@@ -42,6 +31,3 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
