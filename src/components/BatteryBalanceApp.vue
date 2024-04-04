@@ -2,6 +2,7 @@
     <section class="container max-w-[1000px] mx-auto px-[20px] py-[60px] flex flex-col gap-[40px]">
         <h1 class="block text-2xl lg:text-5xl text-[#111322] mb-1">Pack Builder</h1>
         <div class="flex flex-col gap-[16px]">
+            {{  cellInput }}
             <div class="mb-[16px] flex flex-col gap-[16px]">
                 <label class="block text-md text-[#667085]">Provide a list of cells</label>
                 <div class="grid grid-cols-4 sm:grid-cols-6  lg:grid-cols-10 gap-[8px]">
@@ -127,7 +128,7 @@ export default {
             localStorage.setItem('cells', JSON.stringify(this.cells));
         },
         load() {
-            this.cells = JSON.parse(localStorage.getItem('cells'));
+            this.cells = JSON.parse(localStorage.getItem('cells')) || [];
         },
         addCell() {
             this.cells.push(Number(this.cellInput));
