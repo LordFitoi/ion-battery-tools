@@ -27,6 +27,11 @@
                         >
                             Add Cell
                         </button>
+                        <button
+                            class="w-[42px] bg-[#111322] text-white rounded-lg flex items-center justify-center hover:bg-[#50575E] cursor-pointer" @click="removeAllCells()"
+                        >
+                            <img :src="getIcon('/icons/trash-01.svg')" alt="" class="w-[20px] h-[20px] filter-white">
+                        </button>
                     </div>
                     <span class="block text-xs text-[#667085] mt-1 ml-2">Tip: Press enter to quickly add the cell</span>
                 </div>
@@ -61,12 +66,19 @@
 
                 </div>
             </div>
-            <button
-                class="w-full bg-[#111322] text-white rounded-lg px-[14px] py-[10px] text-sm text-center hover:bg-[#50575E] cursor-pointer"
-                @click="buildPack()"    
-            >
-                Build Pack
-            </button>
+            <div class="flex gap-[4px]">
+                <button
+                    class="w-full bg-[#111322] text-white rounded-lg px-[14px] py-[10px] text-sm text-center hover:bg-[#50575E] cursor-pointer"
+                    @click="buildPack()"    
+                >
+                    Build Pack
+                </button>
+                <button
+                    class="w-[42px] bg-[#111322] text-white rounded-lg flex items-center justify-center hover:bg-[#50575E] cursor-pointer" @click="buildPackFromUnused()"
+                >
+                    <img :src="getIcon('/icons/reverse-right.svg')" alt="" class="w-[20px] h-[20px] filter-white">
+                </button>
+            </div>
         </div>
         <div v-if="packs" class="flex flex-col gap-4">
             <div class=" border-[1px] border-[#D0D5DD] rounded-lg p-[16px] bg-[#FFF] shadow-md">
@@ -122,6 +134,14 @@ export default {
     mounted() {
         this.load();
     },
+    watch: {
+        cells: {
+            handler() {
+                this.save();
+            },
+            deep: true
+        }
+    },
     methods: {
         save() {
             localStorage.setItem('cells', JSON.stringify(this.cells));
@@ -129,14 +149,26 @@ export default {
         load() {
             this.cells = JSON.parse(localStorage.getItem('cells')) || [];
         },
+        removeAllCells() {
+            this.cells = [];
+        },
         addCell() {
             this.cells.push(Number(this.cellInput));
             this.cellInput = null;
-            this.save();
         },
         removeCell(i) {
             this.cells.splice(i, 1);
-            this.save();
+        },
+        buildPackFromUnused() {
+            const useCells = this.cells.sort((a, b) => a - b)
+                .reverse()
+                .slice(0, this.series * this.parallels);
+
+            useCells.forEach(cell => {
+                this.cells.splice(this.cells.indexOf(cell), 1);
+            });
+
+            this.buildPack();
         },
         buildPack() {
             if (this.cells.length < 1) {

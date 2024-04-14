@@ -14,12 +14,9 @@ export class PackBuilder {
         this.cells = cells.map((amp, index) => new Cell(amp, index + 1))
             .sort((a, b) => a.amps - b.amps)
             .reverse()
-            .splice(0, this.series * this.parallels);
-
+            .slice(0, this.series * this.parallels);
         this.amps = sum(this.cells.map(c=>c.amps)) / this.series;
     }
-
-
     build() {
         const packs = []
 
