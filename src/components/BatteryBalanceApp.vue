@@ -99,7 +99,7 @@
                     <div>
                         <span class="block text-md text-[#667085] mb-1">Watt Hours</span>
                         <div class="w-full rounded-lg border-[1px] border-[#D0D5DD] shadow-sm px-[12px] py-[8px] text-sm text-[#667085]" >
-                            {{ power }} Wh
+                            {{ Math.round(power * 10000) / 10000 }} Wh
                         </div>
                     </div>
                 </div>
